@@ -1,0 +1,11 @@
+﻿PS> kubectl -n tarea-argocd get svc web-app-service
+NAME              TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+web-app-service   NodePort   10.96.244.12   <none>        80:30080/TCP   2m34s
+
+PS> kubectl -n tarea-argocd get endpoints web-app-service
+NAME              ENDPOINTS                       AGE
+web-app-service   10.244.0.17:80,10.244.0.18:80   2m34s
+
+PS> kubectl -n tarea-argocd run curl-test --image=curlimages/curl --restart=Never --rm -i -- curl -s http://172.26.0.2:30080   # NodePort 30080 sobre la IP del nodo
+OK!
+

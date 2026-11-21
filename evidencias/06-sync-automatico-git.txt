@@ -1,0 +1,28 @@
+﻿PS> git diff k8s/deployment.yml   # cambio en Git: limite de CPU 200m -> 250m
+@@ -26,5 +26,6 @@ spec:
+               cpu: 100m
+               memory: 64Mi
+             limits:
+-              cpu: 200m
++              cpu: 250m
+               memory: 128Mi
++
+
+PS> git commit; git push origin main
+ca14104 Subir limite de CPU a 250m (prueba de sincronizacion automatica)
+
+# Argo CD detecta el nuevo commit y sincroniza solo (tras 90 s)
+PS> kubectl -n argocd get application web-app
+NAME      SYNC STATUS   HEALTH STATUS
+web-app   Synced        Progressing
+
+PS> kubectl -n argocd get application web-app -o jsonpath={.status.sync.revision}
+ca141048ae40d38cdbb981bfdd9f3c4d1053ae53
+
+PS> kubectl -n tarea-argocd get deploy web-app -o jsonpath={.spec.template.spec.containers[0].resources}
+{"limits":{"cpu":"250m","memory":"128Mi"},"requests":{"cpu":"100m","memory":"64Mi"}}
+
+PS> kubectl -n tarea-argocd get pods
+NAME                       READY   STATUS    RESTARTS   AGE
+web-app-84c89f786d-6k9cl   1/1     Running   0          20s
+web-app-84c89f786d-rwq8f   1/1     Running   0          17s

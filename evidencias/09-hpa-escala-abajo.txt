@@ -1,0 +1,28 @@
+﻿PS> kubectl -n tarea-argocd delete pod load-generator   # se detiene la carga
+pod "load-generator" deleted from tarea-argocd namespace
+
+PS> kubectl -n tarea-argocd get hpa web-app-hpa -w   # muestras cada 30 s
+web-app-hpa Deployment/web-app cpu: 42%/50% 2 5 5 10m
+web-app-hpa Deployment/web-app cpu: 1%/50% 2 5 5 10m
+web-app-hpa Deployment/web-app cpu: 1%/50% 2 5 5 11m
+web-app-hpa Deployment/web-app cpu: 1%/50% 2 5 5 11m
+web-app-hpa Deployment/web-app cpu: 1%/50% 2 5 5 12m
+web-app-hpa Deployment/web-app cpu: 1%/50% 2 5 5 12m
+web-app-hpa Deployment/web-app cpu: 1%/50% 2 5 5 13m
+web-app-hpa Deployment/web-app cpu: 1%/50% 2 5 5 13m
+web-app-hpa Deployment/web-app cpu: 1%/50% 2 5 5 14m
+web-app-hpa Deployment/web-app cpu: 1%/50% 2 5 5 14m
+web-app-hpa Deployment/web-app cpu: 1%/50% 2 5 5 15m
+web-app-hpa Deployment/web-app cpu: 1%/50% 2 5 2 15m
+
+PS> kubectl -n tarea-argocd get hpa,pods
+NAME                                              REFERENCE            TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
+horizontalpodautoscaler.autoscaling/web-app-hpa   Deployment/web-app   cpu: 1%/50%   2         5         2          15m
+
+NAME                           READY   STATUS    RESTARTS   AGE
+pod/web-app-84c89f786d-6k9cl   1/1     Running   0          11m
+pod/web-app-84c89f786d-rwq8f   1/1     Running   0          11m
+
+PS> kubectl -n argocd get application web-app   # Argo CD no revierte el escalado del HPA
+NAME      SYNC STATUS   HEALTH STATUS
+web-app   Synced        Healthy

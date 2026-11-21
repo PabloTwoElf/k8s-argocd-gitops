@@ -1,0 +1,10 @@
+﻿PS> kubectl -n tarea-argocd delete service web-app-service   # borrado manual (deriva respecto a Git)
+service "web-app-service" deleted from tarea-argocd namespace
+
+PS> kubectl -n tarea-argocd get svc   # Argo CD (selfHeal) lo recrea desde Git
+NAME              TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+web-app-service   NodePort   10.96.243.105   <none>        80:30080/TCP   25s
+
+PS> kubectl -n argocd get application web-app
+NAME      SYNC STATUS   HEALTH STATUS
+web-app   Synced        Healthy

@@ -1,0 +1,18 @@
+﻿PS> kubectl -n argocd get pods
+NAME                                                READY   STATUS    RESTARTS   AGE
+argocd-application-controller-0                     1/1     Running   0          4m41s
+argocd-applicationset-controller-5769bb65cf-grfgr   1/1     Running   0          4m42s
+argocd-dex-server-bf7db8f94-xhnzv                   1/1     Running   0          4m42s
+argocd-notifications-controller-7fb458797f-5slnt    1/1     Running   0          4m42s
+argocd-redis-765d647874-zp2jt                       1/1     Running   0          4m42s
+argocd-repo-server-5c85959b9d-rnflr                 1/1     Running   0          4m42s
+argocd-server-6f8cfd689-cbnd5                       1/1     Running   0          4m42s
+
+PS> kubectl -n kube-system get deploy metrics-server
+NAME             READY   UP-TO-DATE   AVAILABLE   AGE
+metrics-server   1/1     1            1           4m50s
+
+PS> kubectl top nodes
+NAME                    CPU(cores)   CPU(%)   MEMORY(bytes)   MEMORY(%)
+desktop-control-plane   689m         4%       2447Mi          32%
+

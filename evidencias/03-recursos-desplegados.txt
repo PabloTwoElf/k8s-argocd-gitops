@@ -1,0 +1,14 @@
+﻿PS> kubectl -n tarea-argocd get deploy,svc,hpa,pods -o wide
+NAME                      READY   UP-TO-DATE   AVAILABLE   AGE     CONTAINERS   IMAGES                        SELECTOR
+deployment.apps/web-app   2/2     2            2           2m23s   web-app      registry.k8s.io/hpa-example   app=web-app
+
+NAME                      TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE     SELECTOR
+service/web-app-service   NodePort   10.96.244.12   <none>        80:30080/TCP   2m23s   app=web-app
+
+NAME                                              REFERENCE            TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
+horizontalpodautoscaler.autoscaling/web-app-hpa   Deployment/web-app   cpu: 1%/50%   2         5         2          2m23s
+
+NAME                           READY   STATUS    RESTARTS   AGE     IP            NODE                    NOMINATED NODE   READINESS GATES
+pod/web-app-6b488f65bb-kbk2t   1/1     Running   0          2m23s   10.244.0.18   desktop-control-plane   <none>           <none>
+pod/web-app-6b488f65bb-mdqvx   1/1     Running   0          2m23s   10.244.0.17   desktop-control-plane   <none>           <none>
+

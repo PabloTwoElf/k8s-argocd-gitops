@@ -1,0 +1,10 @@
+﻿PS> kubectl -n argocd get application web-app
+NAME      SYNC STATUS   HEALTH STATUS
+web-app   Synced        Healthy
+
+PS> kubectl -n argocd get application web-app -o jsonpath="{.spec.syncPolicy}"
+{"automated":{"prune":true,"selfHeal":true},"syncOptions":["CreateNamespace=true"]}
+
+PS> kubectl -n argocd get application web-app -o jsonpath="{.status.sync.revision}"
+e477a30cff49123b55809cf0e09fdc7492fcb949
+
